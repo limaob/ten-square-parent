@@ -1,6 +1,6 @@
-package com.ten.square.article.controller;
-import com.ten.square.article.pojo.Channel;
-import com.ten.square.article.service.ChannelService;
+package com.ten.square.recruit.controller;
+import com.ten.square.recruit.service.EnterpriseService;
+import com.ten.square.recruit.pojo.Enterprise;
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 /**
- * channel控制器层
+ * enterprise控制器层
  * @author Administrator
  *
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/channel")
-public class ChannelController {
+@RequestMapping("/enterprise")
+public class EnterpriseController {
 
 	@Autowired
-	private ChannelService channelService;
+	private EnterpriseService enterpriseService;
 	
 	
 	/**
@@ -29,7 +29,7 @@ public class ChannelController {
 	 */
 	@RequestMapping(method= RequestMethod.GET)
 	public Result findAll(){
-		return new Result(true,StatusCode.OK,"查询成功",channelService.findAll());
+		return new Result(true,StatusCode.OK,"查询成功",enterpriseService.findAll());
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class ChannelController {
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.GET)
 	public Result findById(@PathVariable String id){
-		return new Result(true,StatusCode.OK,"查询成功",channelService.findById(id));
+		return new Result(true,StatusCode.OK,"查询成功",enterpriseService.findById(id));
 	}
 
 
@@ -52,8 +52,8 @@ public class ChannelController {
 	 */
 	@RequestMapping(value="/search/{page}/{size}",method=RequestMethod.POST)
 	public Result findSearch(@RequestBody Map searchMap , @PathVariable int page, @PathVariable int size){
-		Page<Channel> pageList = channelService.findSearch(searchMap, page, size);
-		return  new Result(true,StatusCode.OK,"查询成功",  new PageResult<Channel>(pageList.getTotalElements(), pageList.getContent()) );
+		Page<Enterprise> pageList = enterpriseService.findSearch(searchMap, page, size);
+		return  new Result(true,StatusCode.OK,"查询成功",  new PageResult<Enterprise>(pageList.getTotalElements(), pageList.getContent()) );
 	}
 
 	/**
@@ -63,27 +63,27 @@ public class ChannelController {
      */
     @RequestMapping(value="/search",method = RequestMethod.POST)
     public Result findSearch( @RequestBody Map searchMap){
-        return new Result(true,StatusCode.OK,"查询成功",channelService.findSearch(searchMap));
+        return new Result(true,StatusCode.OK,"查询成功",enterpriseService.findSearch(searchMap));
     }
 	
 	/**
 	 * 增加
-	 * @param channel
+	 * @param enterprise
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public Result add(@RequestBody Channel channel  ){
-		channelService.add(channel);
+	public Result add(@RequestBody Enterprise enterprise  ){
+		enterpriseService.add(enterprise);
 		return new Result(true,StatusCode.OK,"增加成功");
 	}
 	
 	/**
 	 * 修改
-	 * @param channel
+	 * @param enterprise
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.PUT)
-	public Result update(@RequestBody Channel channel, @PathVariable String id ){
-		channel.setId(id);
-		channelService.update(channel);
+	public Result update(@RequestBody Enterprise enterprise, @PathVariable String id ){
+		enterprise.setId(id);
+		enterpriseService.update(enterprise);
 		return new Result(true,StatusCode.OK,"修改成功");
 	}
 	
@@ -93,8 +93,18 @@ public class ChannelController {
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.DELETE)
 	public Result delete(@PathVariable String id){
-		channelService.deleteById(id);
+		enterpriseService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
+	}
+
+	/**
+	 * 查询热门企业
+	 * @return
+	 */
+	@GetMapping("/search/hotlist")
+	public Result hotList(){
+		return new Result(true, StatusCode.OK,
+				"success",enterpriseService.hotlist());
 	}
 	
 }

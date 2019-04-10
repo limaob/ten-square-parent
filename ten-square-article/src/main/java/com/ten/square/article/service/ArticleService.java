@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import uitl.IdWorker;
 
@@ -17,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * article服务层
@@ -31,6 +33,9 @@ public class ArticleService {
 
     @Autowired
     private IdWorker idWorker;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 查询全部列表
@@ -75,7 +80,16 @@ public class ArticleService {
      * @return
      */
     public Article findById(String id) {
-        return articleDao.findById(id).get();
+
+        //从缓存中提取        
+        Article article = (Article) redisTemplate.opsForValue().get("article_" + id);
+
+        // 如果缓存没有则到数据库查询并放入缓存
+        if (article == null) {
+            article = articleDao.findById(id).get();
+            redisTemplate.opsForValue().set("article_" + id, article, 1, TimeUnit.DAYS);
+        }
+        return article;
     }
 
     /**
@@ -94,6 +108,8 @@ public class ArticleService {
      * @param article
      */
     public void update(Article article) {
+        // 删除缓存
+        redisTemplate.delete( "article_" + article.getId() );
         articleDao.save(article);
     }
 
@@ -103,6 +119,8 @@ public class ArticleService {
      * @param id
      */
     public void deleteById(String id) {
+        // 删除缓存
+        redisTemplate.delete( "article_" + id );
         articleDao.deleteById(id);
     }
 

@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>ten-square-parent</artifactId>
         <groupId>org.open.dark</groupId>
+        <artifactId>ten-square-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>ten-square-article</artifactId>
+    <artifactId>ten-square-gather</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring‐boot‐starter‐data‐redis</artifactId>
         </dependency>
     </dependencies>
 </project>

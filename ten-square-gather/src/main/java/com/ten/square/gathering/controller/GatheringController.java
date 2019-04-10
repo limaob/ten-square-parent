@@ -1,4 +1,4 @@
-package com.ten.square.article.controller;
+package com.ten.square.gathering.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ten.square.article.pojo.Column;
-import com.ten.square.article.service.ColumnService;
+import com.ten.square.gathering.pojo.Gathering;
+import com.ten.square.gathering.service.GatheringService;
 
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
 /**
- * column控制器层
+ * gathering控制器层
  * @author Administrator
  *
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/column")
-public class ColumnController {
+@RequestMapping("/gathering")
+public class GatheringController {
 
 	@Autowired
-	private ColumnService columnService;
+	private GatheringService gatheringService;
 	
 	
 	/**
@@ -36,7 +36,7 @@ public class ColumnController {
 	 */
 	@RequestMapping(method= RequestMethod.GET)
 	public Result findAll(){
-		return new Result(true,StatusCode.OK,"查询成功",columnService.findAll());
+		return new Result(true,StatusCode.OK,"查询成功",gatheringService.findAll());
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class ColumnController {
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.GET)
 	public Result findById(@PathVariable String id){
-		return new Result(true,StatusCode.OK,"查询成功",columnService.findById(id));
+		return new Result(true,StatusCode.OK,"查询成功",gatheringService.findById(id));
 	}
 
 
@@ -59,8 +59,8 @@ public class ColumnController {
 	 */
 	@RequestMapping(value="/search/{page}/{size}",method=RequestMethod.POST)
 	public Result findSearch(@RequestBody Map searchMap , @PathVariable int page, @PathVariable int size){
-		Page<Column> pageList = columnService.findSearch(searchMap, page, size);
-		return  new Result(true,StatusCode.OK,"查询成功",  new PageResult<Column>(pageList.getTotalElements(), pageList.getContent()) );
+		Page<Gathering> pageList = gatheringService.findSearch(searchMap, page, size);
+		return  new Result(true,StatusCode.OK,"查询成功",  new PageResult<Gathering>(pageList.getTotalElements(), pageList.getContent()) );
 	}
 
 	/**
@@ -70,27 +70,27 @@ public class ColumnController {
      */
     @RequestMapping(value="/search",method = RequestMethod.POST)
     public Result findSearch( @RequestBody Map searchMap){
-        return new Result(true,StatusCode.OK,"查询成功",columnService.findSearch(searchMap));
+        return new Result(true,StatusCode.OK,"查询成功",gatheringService.findSearch(searchMap));
     }
 	
 	/**
 	 * 增加
-	 * @param column
+	 * @param gathering
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public Result add(@RequestBody Column column  ){
-		columnService.add(column);
+	public Result add(@RequestBody Gathering gathering  ){
+		gatheringService.add(gathering);
 		return new Result(true,StatusCode.OK,"增加成功");
 	}
 	
 	/**
 	 * 修改
-	 * @param column
+	 * @param gathering
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.PUT)
-	public Result update(@RequestBody Column column, @PathVariable String id ){
-		column.setId(id);
-		columnService.update(column);
+	public Result update(@RequestBody Gathering gathering, @PathVariable String id ){
+		gathering.setId(id);
+		gatheringService.update(gathering);
 		return new Result(true,StatusCode.OK,"修改成功");
 	}
 	
@@ -100,7 +100,7 @@ public class ColumnController {
 	 */
 	@RequestMapping(value="/{id}",method= RequestMethod.DELETE)
 	public Result delete(@PathVariable String id){
-		columnService.deleteById(id);
+		gatheringService.deleteById(id);
 		return new Result(true,StatusCode.OK,"删除成功");
 	}
 	
