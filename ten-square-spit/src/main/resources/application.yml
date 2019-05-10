@@ -1,0 +1,12 @@
+server:
+  port: 9016
+spring:
+  application:
+    name: ten-square-spit
+  data:
+    mongodb:
+      host:
+      database:
+  redis:
+    host: 47.244.1.108
+    port: 6379

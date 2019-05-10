@@ -1,6 +1,5 @@
 package com.ten.square.qa.dao;
 
-import com.ten.square.article.qa.pojo.Problem;
 import com.ten.square.qa.pojo.Problem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

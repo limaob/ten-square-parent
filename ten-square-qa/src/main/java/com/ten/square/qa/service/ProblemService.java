@@ -1,6 +1,5 @@
 package com.ten.square.qa.service;
 
-import com.ten.square.article.qa.pojo.Problem;
 import com.ten.square.qa.dao.ProblemDao;
 import com.ten.square.qa.pojo.Problem;
 import org.springframework.beans.factory.annotation.Autowired;

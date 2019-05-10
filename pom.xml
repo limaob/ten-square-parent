@@ -14,6 +14,7 @@
         <module>ten-square-qa</module>
         <module>ten-square-article</module>
         <module>ten-square-gather</module>
+        <module>ten-square-spit</module>
         <!--<module>m3u8</module>-->
     </modules>
     <packaging>pom</packaging>
@@ -55,6 +56,7 @@
         <java.version>1.8</java.version>
         <square.version>1.0-SNAPSHOT</square.version>
         <commons-lang3.version>3.5</commons-lang3.version>
+        <spring-boot-starter-data-redis.version>2.0.6.RELEASE</spring-boot-starter-data-redis.version>
     </properties>
     <dependencies>
         <dependency>
@@ -78,6 +80,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot-starter-data-redis.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
